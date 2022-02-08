@@ -2,6 +2,7 @@
 /* DO NOT MODIFY THIS FILE */
 
 #include <stdint.h>
+#include <stdlib.h>
 
 /*
  * This makes the DPRINT macro and all trace flags available.
@@ -30,7 +31,7 @@
 /* M5 note: must match typedefs in in base/types.hh */
 typedef uint64_t Addr;
 typedef int64_t Tick;
-
+typedef int Delta;
 
 /*
  * This is the information provided to the prefetcher on each call to
@@ -42,6 +43,18 @@ struct AccessStat {
     Tick time;      /* The simulator time cycle when the request was sent */
     int miss;       /* Was this demand access a cache hit (0) or miss (1)? */
 };
+
+typedef struct
+{
+    Addr pc;
+    Addr last_addr;
+    Delta delta;  
+} rpt_line_t;
+
+typedef struct {
+    rpt_line_t *lines;
+    int size;
+} rpt_t;
 
 
 /*
