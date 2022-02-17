@@ -31,7 +31,7 @@
 /* M5 note: must match typedefs in in base/types.hh */
 typedef uint64_t Addr;
 typedef int64_t Tick;
-typedef int Delta;
+typedef uint64_t Delta;
 
 /*
  * This is the information provided to the prefetcher on each call to
@@ -44,17 +44,38 @@ struct AccessStat {
     int miss;       /* Was this demand access a cache hit (0) or miss (1)? */
 };
 
+// typedef struct
+// {
+//     Addr pc;
+//     Addr last_addr;
+//     Delta delta;  
+// } rpt_line_t;
+
+// typedef struct {
+//     rpt_line_t *lines;
+//     int size;
+// } rpt_t;
+
+typedef struct
+{
+    Delta *list;
+    int size;
+} delta_buff_t;
+
 typedef struct
 {
     Addr pc;
     Addr last_addr;
-    Delta delta;  
-} rpt_line_t;
+    Addr last_prefetch_addr;
+    delta_buff_t buffer;
+} dcpt_line_t;
 
-typedef struct {
-    rpt_line_t *lines;
+typedef struct
+{
+    dcpt_line_t *lines;
     int size;
-} rpt_t;
+} dcpt_t;
+
 
 
 /*
