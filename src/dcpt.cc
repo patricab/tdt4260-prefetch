@@ -27,20 +27,6 @@ tr1::unordered_map<Addr, DCPT> table;
 list<Addr> candidates;
 list<Addr> prefetches;
 
-void issue_prefetch(Addr addr){
-	cout << "prefetched: " << addr << endl;
-}
-
-/* Is this address already in the cache? */
-int in_cache(Addr addr) {
-	return false;
-}
-
-/* Is this address already in the MSHR queue? */
-int in_mshr_queue(Addr addr) {
-	return false;
-}
-
 void delta_correlation(DCPT entry) {
 	candidates.clear();
 
@@ -87,7 +73,7 @@ void prefetch_init(void)
 	/* Called before any calls to prefetch_access. */
 	/* This is the place to initialize data structures. */
 
-	// * DPRINTF(HWPrefetch, "Initialized delta-correlated prediction table prefetcher\n");
+	DPRINTF(HWPrefetch, "Initialized delta-correlated prediction table prefetcher\n");
 
 }
 
@@ -139,23 +125,4 @@ void prefetch_access(AccessStat stat) {
 void prefetch_complete(Addr addr) {
 	// Called when a block requested by the prefetcher has been loaded.
 
-}
-
-
-int main() {
-   prefetch_init();
-
-	AccessStat stat;
-
-	for (int i = 0; i < 6; i++)
-	{
-		for (int k = 10; k < 13; k++)
-		{
-			stat.pc = k;
-			stat.mem_addr = k * i;
-			stat.time = k + i;
-			stat.miss = true;
-			prefetch_access(stat);
-		}
-	}
 }
